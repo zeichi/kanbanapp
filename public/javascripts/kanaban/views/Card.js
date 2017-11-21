@@ -1,7 +1,7 @@
 /**
  * Created by zeichi on 2017-04-05.
  */
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import CheckList from './CheckList';
 import marked from 'marked';
 
@@ -63,5 +63,13 @@ class Card extends Component {
         );
     }
 }
+
+Card.propTypes = {
+    id: PropTypes.number,
+    title: PropTypes.string,
+    description: PropTypes.string,
+    color: PropTypes.string,
+    tasks: PropTypes.arrayOf(PropTypes.object)
+};
 
 export default Card;

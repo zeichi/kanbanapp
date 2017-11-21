@@ -1,7 +1,7 @@
 /**
  * Created by zeichi on 2017-04-05.
  */
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import Card from './Card';
 
 class List extends Component {
@@ -29,5 +29,10 @@ class List extends Component {
         )
     }
 }
+
+List.propType = {
+    title: PropTypes.string.isRequired,
+    cards: PropTypes.arrayOf(PropTypes.object)
+};
 
 export default List;
