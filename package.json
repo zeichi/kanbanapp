@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build": "webpack",
+    "build": "node_modules/.bin/webpack",
     "start": "node ./bin/www",
     "devserver": "webpack-dev-server --open --progress"
   },
@@ -18,10 +18,13 @@
     "debug": "~2.6.9",
     "express": "^4.15.5",
     "jade": "~1.11.0",
+    "marked": "^0.3.7",
     "morgan": "~1.9.0",
     "react": "^16.1.1",
+    "react-addons-update": "^15.6.2",
     "react-dom": "^16.1.1",
-    "serve-favicon": "~2.4.5"
+    "serve-favicon": "~2.4.5",
+    "whatwg-fetch": "^2.0.3"
   },
   "description": "Collaborative kanban web app.",
   "main": "app.js",
