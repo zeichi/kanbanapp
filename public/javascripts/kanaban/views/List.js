@@ -10,7 +10,7 @@ class List extends Component {
         //      return element*10}
         // );
         // map 함수는 해당 array를 function 내 특정 규칙으로 새로운 배열을 만든다.
-        var cards = this.props.cards.map((card) => {
+        let cards = this.props.cards.map((card) => {
             return <Card
                 key={card.id}
                 id={card.id}
@@ -18,6 +18,8 @@ class List extends Component {
                 description={card.description}
                 color={card.color}
                 tasks={card.tasks}
+
+                taskCallbacks={this.props.taskCallbacks}
             />
         });
 
@@ -32,7 +34,8 @@ class List extends Component {
 
 List.propType = {
     title: PropTypes.string.isRequired,
-    cards: PropTypes.arrayOf(PropTypes.object)
+    cards: PropTypes.arrayOf(PropTypes.object),
+    taskCallbacks: PropTypes.object
 };
 
 export default List;
