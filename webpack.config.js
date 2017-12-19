@@ -7,13 +7,14 @@ module.exports = {
         // server: "./server/main.js"
     },
     output: {
+        // __dirname : 현재 실행중인 스크립트가 있는 디렉터리 이름을 포함하는 node.js 전역 변수
         path: path.resolve(__dirname, 'public'),
         filename: '[name].js',
     },
 
     // entry: [/*"./bin/www"*/'./app.js'/*, './public/javascript/kanaban/main.js'*/],
     // output: {
-        // __dirname : 현재 실행중인 스크립트가 있는 디렉터리 이름을 포함하는 node.js 전역 변수
+
         // path: path.resolve(__dirname, 'dist'),
         // publicPath: '/dist/',
         // filename: 'bundle.js'
