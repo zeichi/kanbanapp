@@ -18,7 +18,8 @@ class KanbanBoardContainer extends Component {
     }
 
     addTask(cardId, taskName) {
-        let cardIndex = this.state.cards.findIndex((card) => card.id == cardId);
+        let prevState = this.state, // 변경하기 전 원래 상태에 대한 참조를 저장한다
+            cardIndex = this.state.cards.findIndex((card) => card.id == cardId);
 
         // 지정된 이름과 임시 IDfh tofhdns xotmzmfmf todtjdgksek.
         let newTask = {
@@ -39,11 +40,20 @@ class KanbanBoardContainer extends Component {
             method: 'post',
             headers: API_HEADERS,
             body: JSON.stringify(newTask)
-        }).then((response) => response.json())
-            .then((responseData) => {
-                newTask.id = responseData.id;
-                this.setState({ cards:nextState });
-            });
+        }).then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                // 서버 응답이 정상이 아닌 경우
+                // 오류를 생성해 UI에 대한 낙관적인 변경을 되돌린다
+                throw new Error("Server response wasn't OK");
+            }
+        }).then((responseData) => {
+            newTask.id = responseData.id;
+            this.setState({ cards: nextState });
+        }).catch((error) => {
+            this.setState(prevState);
+        });
     }
 
     deleteTask(cardId, taskId, taskIndex) {
@@ -53,6 +63,7 @@ class KanbanBoardContainer extends Component {
         // 지원하지않는 브라우저에서 이를 동작하게 하기 위해서는 babel-polyfill을 설치해야한다
         // npm install --save babel-polyfilㅣ (코드에 import 'babel-polyfill'을 추가한다)
 
+        let prevState = this.state;
         let cardIndex = this.state.cards.findIndex((card) => card.id == cardId);
 
         // 해당 테스크를 제외한 새로운 객체를 생성한다
@@ -69,29 +80,35 @@ class KanbanBoardContainer extends Component {
         fetch('${API_URL}/cards/${cardId}/tasks/${taskId}', {
             method: 'delete',
             headers: API_HEADERS
+        }).then((response) => {
+            if (!response.ok) {
+                throw new Error("Server response wasn't OK");
+            }
+        }).catch((error) => {
+            console.error("fetch error:", error);
+            this.setState(prevState);
         });
     }
 
     toggleTask(cardId, taskId, taskIndex) {
-        // 카드의 인덱스를 찾는다
-        let cardIndex = this.state.cards.findIndex((card) => card.id == cardId);
-        // 테스트의 'done'값에 대한 참조를 저장한다
-        let nowDoneValue;
-        // $apply 명령을 이용해 done 값을 현재와 반대로 변경한다
-        let nextState = update(this.state.cards, {
-            [cardIndex]: {
-                tasks: {
-                    [taskIndex]: {
-                        done: {
-                            $apply: done => {
-                                newDoneValue = !done;
-                                return newDoneValue;
+
+        let prevState = this.state,
+            cardIndex = this.state.cards.findIndex((card) => card.id == cardId), // 카드의 인덱스를 찾는다
+            nowDoneValue, // 테스트의 'done'값에 대한 참조를 저장한다
+            nextState = update(this.state.cards, { // $apply 명령을 이용해 done 값을 현재와 반대로 변경한다
+                [cardIndex]: {
+                    tasks: {
+                        [taskIndex]: {
+                            done: {
+                                $apply: done => {
+                                    newDoneValue = !done;
+                                    return newDoneValue;
+                                }
                             }
                         }
                     }
                 }
-            }
-        });
+            });
 
         // 변경된 객체로 컴포넌트 상태를 설정한다
         this.setState({ cards: nextState });
@@ -101,6 +118,13 @@ class KanbanBoardContainer extends Component {
             method: 'put',
             headers: API_HEADERS,
             body: JSON.stringify({ done: newDoneValue })
+        }).then((response) => {
+            if (!response.ok) {
+                throw new Error("Server response wasn't OK");
+            }
+        }).catch((error) => {
+            console.error("Fetch error:", error);
+            this.setState(prevState);
         });
     }
 
