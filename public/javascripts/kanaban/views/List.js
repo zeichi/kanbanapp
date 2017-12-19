@@ -32,10 +32,10 @@ class List extends Component {
     }
 }
 
-List.propType = {
-    title: PropTypes.string.isRequired,
-    cards: PropTypes.arrayOf(PropTypes.object),
-    taskCallbacks: PropTypes.object
-};
+// List.propType = {
+//     title: PropTypes.string.isRequired,
+//     cards: PropTypes.arrayOf(PropTypes.object),
+//     taskCallbacks: PropTypes.object
+// };
 
 export default List;

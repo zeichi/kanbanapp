@@ -38,10 +38,10 @@ class CheckList extends Component {
     };
 }
 
-CheckList.propTypes = {
-    cardId: PropTypes.number,
-    tasks: PropTypes.arrayOf(PropTypes.object),
-    taskCallbacks: PropTypes.object
-};
+// CheckList.propTypes = {
+//     cardId: PropTypes.number,
+//     tasks: PropTypes.arrayOf(PropTypes.object),
+//     taskCallbacks: PropTypes.object
+// };
 
 export default CheckList;

@@ -79,13 +79,13 @@ class Card extends Component {
     }
 }
 
-Card.propTypes = {
-    id: PropTypes.number,
-    title: titlePropType,
-    description: PropTypes.string,
-    color: PropTypes.string,
-    tasks: PropTypes.arrayOf(PropTypes.object),
-    taskCallbacks: PropTypes.object
-};
+// Card.propTypes = {
+//     id: PropTypes.number,
+//     title: titlePropType,
+//     description: PropTypes.string,
+//     color: PropTypes.string,
+//     tasks: PropTypes.arrayOf(PropTypes.object),
+//     taskCallbacks: PropTypes.object
+// };
 
 export default Card;
